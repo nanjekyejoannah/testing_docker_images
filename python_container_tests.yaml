@@ -1,0 +1,34 @@
+schemaVersion: "2.0.0"
+
+# globalEnvVars:
+#   - key: "VIRTUAL_ENV"
+#     value: "/env"
+#   - key: "PATH"
+#     value: "/env/bin:$PATH"
+
+commandTests:
+
+  - name: "python installation"
+    command: "which"
+    args: ["python"]
+    expectedOutput: ["/usr/bin/python\n"]
+
+  - name: "python in virtualenv"
+    setup: [["virtualenv", "/env"]]
+    command: "which"
+    args: ["python"]
+    expectedOutput: ["/env/bin/python\n"]
+
+fileContentTests:
+
+  - name: 'app sources'
+    path: 'app/requirements.txt'
+    expectedContents: ['PyQt5']
+
+
+fileExistenceTests:
+
+  - name: 'app packages'
+    path: '/app/requirements.txt'
+    shouldExist: true
+    permissions: '-rw-rw-r--'
